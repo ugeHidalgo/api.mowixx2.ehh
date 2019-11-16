@@ -1,6 +1,7 @@
 ﻿using API.Mowizz2.EHH.Configs;
 using API.Mowizz2.EHH.Models;
 using MongoDB.Driver;
+using System.Collections.Generic;
 
 namespace API.Mowizz2.EHH.Facades
 {
@@ -15,5 +16,10 @@ namespace API.Mowizz2.EHH.Facades
 
             _bankAccounts = dataBase.GetCollection<BankAccount>(settings.BankAccountsCollectionName);
         }
+
+        public List<BankAccount> Get()
+        {
+            return _bankAccounts.Find(bankAccount => true).ToList();
+        }            
     }
 }
