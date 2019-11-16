@@ -19,7 +19,8 @@ namespace API.Mowizz2.EHH.Facades
 
         public List<BankAccount> Get()
         {
-            return _bankAccounts.Find(bankAccount => true).ToList();
+            var bankAccounts = _bankAccounts.Find(bankAccount => true).ToList();
+            return bankAccounts;
         }            
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace API.Mowizz2.EHH.Models
 {
@@ -9,21 +10,28 @@ namespace API.Mowizz2.EHH.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        [BsonElement("Name")]
+        [BsonElement("name")]
         public string Name { get; set; }
 
+        [BsonElement("description")]
         public string Description { get; set; }
 
-        public bool Active { get; set; }
+        [BsonElement("active")]
+        public Boolean Active { get; set; }
 
+        [BsonElement("iban")]
         public string Iban { get; set; }
 
+        [BsonElement("comments")]
         public string Comments { get; set; }
-        
-        public BsonDateTime Created { get; set; }
 
-        public BsonDateTime Updated { get; set; }
+        [BsonElement("created")]
+        public DateTime Created { get; set; }
 
+        [BsonElement("updated")]
+        public DateTime Updated { get; set; }
+
+        [BsonElement("username")]
         public string UserName { get; set; }
     }
 }
