@@ -27,7 +27,7 @@ namespace API.Mowizz2.EHH
             services.AddSingleton<IDataBaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<DataBaseSettings>>().Value);
 
-            services.AddSingleton<BankAccountFacade>();
+            services.AddSingleton<BankAccountsFacade>();
 
             services.AddControllers();
         }
