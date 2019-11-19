@@ -31,7 +31,7 @@ namespace API.Mowizz2.EHH.Models
         [BsonElement("updated")]
         public DateTime Updated { get; set; }
 
-        [BsonElement("username")]
+        [BsonElement("userName")]
         public string UserName { get; set; }
     }
 }
