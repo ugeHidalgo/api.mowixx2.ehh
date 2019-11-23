@@ -31,10 +31,7 @@ namespace API.Mowizz2.EHH
 
             services.AddControllers();
 
-            services.AddCors(c =>
-            {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
-            });
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +45,11 @@ namespace API.Mowizz2.EHH
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            // global cors policy
+            app.UseCors(x => x
+                  .AllowAnyOrigin()
+                  .AllowAnyHeader());
 
             app.UseAuthorization();
 
