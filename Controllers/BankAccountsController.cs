@@ -10,29 +10,29 @@ namespace API.Mowizz2.EHH.Controllers
     [ApiController]
     public class BankAccountsController : ControllerBase
     {
-        private readonly BankAccountsFacade _facade;
-        
-        public BankAccountsController(BankAccountsFacade facade)
+        private readonly BankAccountsService _service;
+
+        public BankAccountsController(BankAccountsService service)
         {
-            _facade = facade;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<BankAccount>>> Get()
         {
-            return await _facade.Get();
+            return await _service.Get();
         }
 
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<BankAccount>> Get(string id)
         {
-            BankAccount bankAccount = await _facade.Get(id);
+            BankAccount bankAccount = await _service.Get(id);
 
-            if (bankAccount == null) 
-            { 
-                return NotFound(string.Format("No bank acount with Id: \'{0}\' exist", id)); 
-            }  
-            
+            if (bankAccount == null)
+            {
+                return NotFound(string.Format("No bank acount with Id: \'{0}\' exist", id));
+            }
+
             return bankAccount;
         }
     }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace API.Mowizz2.EHH.Facades
 {
-    public class BankAccountsFacade
+    public class BankAccountsService
     {
         private readonly IMongoCollection<BankAccount> _bankAccounts;
 
-        public BankAccountsFacade(IDataBaseSettings settings)
+        public BankAccountsService(IDataBaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var dataBase = client.GetDatabase(settings.DatabaseName);
