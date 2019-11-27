@@ -1,5 +1,6 @@
 using API.Mowizz2.EHH.Configs;
 using API.Mowizz2.EHH.Facades;
+using API.Mowizz2.EHH.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,7 @@ namespace API.Mowizz2.EHH
                 sp.GetRequiredService<IOptions<DataBaseSettings>>().Value);
 
             services.AddSingleton<BankAccountsService>();
+            services.AddSingleton<UsersService>();
 
             services.AddControllers();
 

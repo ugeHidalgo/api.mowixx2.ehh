@@ -26,7 +26,7 @@ namespace API.Mowizz2.EHH.Services
             return users.FirstOrDefault();
         }
 
-        public async Task<User> Post(User user)
+        public async Task<User> Post(User user) 
         {
             await _users.InsertOneAsync(user);
             return user;
