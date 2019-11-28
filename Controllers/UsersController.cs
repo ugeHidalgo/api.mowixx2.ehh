@@ -21,14 +21,18 @@ namespace API.Mowizz2.EHH.Controllers
         }
 
         
-        [HttpGet("{id}", Name = "GetUser")]
-        public async Task<ActionResult<User>> Get(string id)
+        [HttpGet("{idOrUserName}", Name = "GetUser")]
+        public async Task<ActionResult<User>> Get(string idOrUserName)
         {
-            var user = await _service.Get(id);
+            var user = await _service.Get(idOrUserName);
 
             if (user == null)
             {
-                return NotFound();
+                user = await _service.GetByUserName(idOrUserName);
+                if (user == null)
+                {
+                    return NotFound();
+                }
             }
             return Ok(user);
         }
@@ -38,6 +42,18 @@ namespace API.Mowizz2.EHH.Controllers
         {
             await _service.Post(user);
             return CreatedAtRoute("GetUser", new { id = user.Id }, user);
+        }
+
+        [HttpPost("auth")]
+        public async Task<ActionResult<UserToken>> GetToken([FromBody] UserToken userToken)
+        {
+            var user = await _service.GetByUserName(userToken.UserName);
+            if (user == null)
+            {
+                return Unauthorized(userToken);
+            }
+            userToken.Token = "tokenaqui";
+            return Ok(userToken);
         }
 
         //// PUT: api/Users/5

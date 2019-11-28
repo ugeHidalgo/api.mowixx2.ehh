@@ -26,6 +26,12 @@ namespace API.Mowizz2.EHH.Services
             return users.FirstOrDefault();
         }
 
+        public async Task<User> GetByUserName(string userName)
+        {
+            var users = await _users.FindAsync(user => user.UserName == userName);
+            return users.FirstOrDefault();
+        }
+
         public async Task<User> Post(User user) 
         {
             await _users.InsertOneAsync(user);
