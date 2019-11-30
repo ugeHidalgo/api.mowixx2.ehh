@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API.Mowizz2.EHH.Facades
-{
+{    
     public class BankAccountsService
     {
         private readonly IMongoCollection<BankAccount> _bankAccounts;
@@ -16,6 +16,15 @@ namespace API.Mowizz2.EHH.Facades
             var dataBase = client.GetDatabase(settings.DatabaseName);
 
             _bankAccounts = dataBase.GetCollection<BankAccount>(settings.BankAccountsCollectionName);
+        }
+
+        public BankAccountsHealthStatus Check()
+        {
+            return new BankAccountsHealthStatus
+            {
+                Connected = _bankAccounts != null,
+                CollectionName = _bankAccounts.CollectionNamespace.CollectionName
+            };
         }
 
         public async Task<List<BankAccount>> Get()
