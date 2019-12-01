@@ -1,8 +1,6 @@
 ﻿using API.Mowizz2.EHH.Configs;
 using API.Mowizz2.EHH.Models;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,6 +16,15 @@ namespace API.Mowizz2.EHH.Services
             var dataBase = client.GetDatabase(settings.DatabaseName);
 
             _users = dataBase.GetCollection<User>(settings.UsersCollectionName);
+        }
+
+        public HealthStatusData Check()
+        {
+            return new HealthStatusData
+            {
+                Connected = _users != null,
+                CollectionName = _users.CollectionNamespace.CollectionName
+            };
         }
 
         public async Task<User> Get(string userId)

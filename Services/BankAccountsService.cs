@@ -18,9 +18,9 @@ namespace API.Mowizz2.EHH.Facades
             _bankAccounts = dataBase.GetCollection<BankAccount>(settings.BankAccountsCollectionName);
         }
 
-        public BankAccountsHealthStatus Check()
+        public HealthStatusData Check()
         {
-            return new BankAccountsHealthStatus
+            return new HealthStatusData
             {
                 Connected = _bankAccounts != null,
                 CollectionName = _bankAccounts.CollectionNamespace.CollectionName

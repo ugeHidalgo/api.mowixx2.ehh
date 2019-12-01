@@ -6,14 +6,17 @@ namespace API.Mowizz2.EHH
     {
         public DateTime CheckDate { get; set; }
 
-        public string ConnectionString { get; set; }
+        public string ServerName { get; set; }
 
         public string DataBaseName { get; set; }
 
-        public BankAccountsHealthStatus BankAccountsHealthStatus { get; set; }        
+        public string DataBaseUserName { get; set; }        
+
+        public HealthStatusData BankAccountsHealthStatus { get; set; }
+        public HealthStatusData UsersHealthStatus { get; set; }
     }
 
-    public class BankAccountsHealthStatus
+    public class HealthStatusData
     {
         public bool Connected { get; set; }
         public string CollectionName { get; set; }
