@@ -20,7 +20,7 @@ namespace API.Mowizz2.EHH.Controllers
             _service = service;
         }
 
-        
+
         [HttpGet("{idOrUserName}", Name = "GetUser")]
         public async Task<ActionResult<User>> Get(string idOrUserName)
         {
@@ -47,12 +47,11 @@ namespace API.Mowizz2.EHH.Controllers
         [HttpPost("auth")]
         public async Task<ActionResult<UserToken>> GetToken([FromBody] UserToken userToken)
         {
-            var user = await _service.GetByUserName(userToken.UserName);
-            if (user == null)
+            userToken = await _service.AddTokenToAuthorizedUser(userToken);
+            if (userToken.Token == null || userToken.Token == string.Empty)
             {
                 return Unauthorized(userToken);
-            }
-            userToken.Token = "tokenaqui";
+            }            
             return Ok(userToken);
         }
 
