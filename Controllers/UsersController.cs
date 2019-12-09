@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using API.Mowizz2.EHH.Models;
+﻿using API.Mowizz2.EHH.Models;
 using API.Mowizz2.EHH.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using System;
+using System.Threading.Tasks;
 
 namespace API.Mowizz2.EHH.Controllers
 {
@@ -13,10 +11,14 @@ namespace API.Mowizz2.EHH.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private readonly JwtIssuerOptions _jwtOptions;
         private readonly UsersService _service;
 
-        public UsersController(UsersService service)
+        public UsersController(IOptions<JwtIssuerOptions> jwtOptions, UsersService service)
         {
+            _jwtOptions = jwtOptions.Value;
+            ThrowIfInvalidOptions(_jwtOptions);
+
             _service = service;
         }
 
@@ -47,7 +49,7 @@ namespace API.Mowizz2.EHH.Controllers
         [HttpPost("auth")]
         public async Task<ActionResult<UserToken>> GetToken([FromBody] UserToken userToken)
         {
-            userToken = await _service.AddTokenToAuthorizedUser(userToken);
+            userToken = await _service.AddTokenToAuthorizedUser(userToken, _jwtOptions);
             if (userToken.Token == null || userToken.Token == string.Empty)
             {
                 return Unauthorized(userToken);
@@ -66,5 +68,25 @@ namespace API.Mowizz2.EHH.Controllers
         //public void Delete(int id)
         //{
         //}
+
+        private static void ThrowIfInvalidOptions(JwtIssuerOptions options)
+        {
+            if (options == null) throw new ArgumentNullException(nameof(options));
+
+            if (options.ValidFor <= TimeSpan.Zero)
+            {
+                throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(JwtIssuerOptions.ValidFor));
+            }
+
+            if (options.SigningCredentials == null)
+            {
+                throw new ArgumentNullException(nameof(JwtIssuerOptions.SigningCredentials));
+            }
+
+            if (options.JtiGenerator == null)
+            {
+                throw new ArgumentNullException(nameof(JwtIssuerOptions.JtiGenerator));
+            }
+        }
     }
 }

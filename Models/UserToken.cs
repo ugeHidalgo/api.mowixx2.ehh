@@ -12,5 +12,8 @@ namespace API.Mowizz2.EHH.Models
 
         [BsonElement("token")]
         public string Token { get; set; }
+
+        [BsonElement("expiresInSeconds")]
+        public int ExpiresIn { get; set; }
     }
 }

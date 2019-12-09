@@ -1,11 +1,13 @@
 ﻿using API.Mowizz2.EHH.Facades;
 using API.Mowizz2.EHH.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API.Mowizz2.EHH.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BankAccountsController : ControllerBase
