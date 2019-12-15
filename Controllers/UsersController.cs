@@ -46,7 +46,7 @@ namespace API.Mowizz2.EHH.Controllers
             return CreatedAtRoute("GetUser", new { id = user.Id }, user);
         }
 
-        [HttpPost("auth")]
+        [HttpPost("auth/")]
         public async Task<ActionResult<UserToken>> GetToken([FromBody] UserToken userToken)
         {
             userToken = await _service.AddTokenToAuthorizedUser(userToken, _jwtOptions);
