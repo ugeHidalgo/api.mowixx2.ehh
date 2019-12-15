@@ -85,6 +85,8 @@ namespace API.Mowizz2.EHH.Services
                           "MowizzApiAccess")
               };
 
+            jwtOptions.IssuedAt = DateTime.UtcNow;            
+
             var jwt = new JwtSecurityToken(
                               issuer: jwtOptions.Issuer,
                               audience: jwtOptions.Audience,
