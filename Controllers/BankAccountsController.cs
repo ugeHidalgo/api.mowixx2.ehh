@@ -37,5 +37,13 @@ namespace API.Mowizz2.EHH.Controllers
 
             return bankAccount;
         }
+        
+        [HttpPost]
+        public async Task<BankAccount> Put([FromBody] BankAccount bankAccount)
+        {
+            BankAccount newBankAccount = await _service.Create(bankAccount);
+
+            return newBankAccount;
+        }
     }
 }

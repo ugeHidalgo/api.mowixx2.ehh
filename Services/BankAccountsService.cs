@@ -1,6 +1,7 @@
 ﻿using API.Mowizz2.EHH.Configs;
 using API.Mowizz2.EHH.Models;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -35,6 +36,12 @@ namespace API.Mowizz2.EHH.Facades
         public async Task<BankAccount> Get(string id)
         {
             var bankAccount = await _bankAccounts.FindAsync(x => x.Id == id).Result.FirstOrDefaultAsync();
+            return bankAccount;
+        }
+
+        public async Task<BankAccount> Create(BankAccount bankAccount)
+        {
+            await _bankAccounts.InsertOneAsync(bankAccount);
             return bankAccount;
         }
     }
