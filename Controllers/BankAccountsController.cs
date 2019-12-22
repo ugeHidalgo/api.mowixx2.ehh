@@ -39,11 +39,11 @@ namespace API.Mowizz2.EHH.Controllers
         }
         
         [HttpPost]
-        public async Task<BankAccount> Put([FromBody] BankAccount bankAccount)
+        public async Task<List<BankAccount>> CreateBankAccounts([FromBody] List<BankAccount> bankAccounts)
         {
-            BankAccount newBankAccount = await _service.Create(bankAccount);
+            List<BankAccount> newBankAccounts = await _service.CreateBankAccounts(bankAccounts);
 
-            return newBankAccount;
+             return newBankAccounts;
         }
     }
 }

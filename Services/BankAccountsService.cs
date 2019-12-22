@@ -39,10 +39,10 @@ namespace API.Mowizz2.EHH.Facades
             return bankAccount;
         }
 
-        public async Task<BankAccount> Create(BankAccount bankAccount)
+        public async Task<List<BankAccount>> CreateBankAccounts(List<BankAccount> bankAccounts)
         {
-            await _bankAccounts.InsertOneAsync(bankAccount);
-            return bankAccount;
+            await _bankAccounts.InsertManyAsync(bankAccounts);
+            return bankAccounts;
         }
     }
 }
