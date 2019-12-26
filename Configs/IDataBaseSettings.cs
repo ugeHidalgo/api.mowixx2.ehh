@@ -6,5 +6,6 @@
         string DatabaseName { get; set; }
         string BankAccountsCollectionName { get; set; }        
         string UsersCollectionName { get; set; }
+        string CompaniesCollectionName { get; set; }
     }
 }
