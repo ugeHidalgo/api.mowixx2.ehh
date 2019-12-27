@@ -15,5 +15,8 @@ namespace API.Mowizz2.EHH.Models
 
         [BsonElement("expiresInSeconds")]
         public int ExpiresIn { get; set; }
+
+        [BsonElement("company")]
+        public string Company { get; set; }
     }
 }

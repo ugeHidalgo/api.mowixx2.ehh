@@ -59,7 +59,8 @@ namespace API.Mowizz2.EHH.Services
             if (IsAuthorizedUser(userTokenRequest, userInBd))
             {
                 userTokenRequest.Token = await GetToken(userTokenRequest.UserName, jwtOptions);
-                userTokenRequest.ExpiresIn = (int)jwtOptions.ValidFor.TotalSeconds;                
+                userTokenRequest.Company = userInBd.Company; 
+                userTokenRequest.ExpiresIn = (int)jwtOptions.ValidFor.TotalSeconds;
             }
 
             userTokenRequest.Password = string.Empty;

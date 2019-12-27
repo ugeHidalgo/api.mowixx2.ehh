@@ -40,7 +40,7 @@ namespace API.Mowizz2.EHH.Services
 
         public async Task<List<Company>> CreateCompanies(List<Company> companies)
         {
-            await _mongoCollection.InsertManyAsync(companies);
+             await _mongoCollection.InsertManyAsync(companies);
             return companies;
         }
     }
