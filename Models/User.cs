@@ -33,5 +33,8 @@ namespace API.Mowizz2.EHH.Models
 
         [BsonElement("eMail")]
         public string EMail { get; set; }
+
+        [BsonElement("company")]
+        public string Company { get; set; }
     }
 }

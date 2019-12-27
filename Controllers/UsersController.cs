@@ -43,7 +43,8 @@ namespace API.Mowizz2.EHH.Controllers
         public async Task<ActionResult<User>> Post([FromBody] User user)
         {
             await _service.Post(user);
-            return CreatedAtRoute("GetUser", new { id = user.Id }, user);
+            var result = Created("", user);
+            return result;
         }
 
         [HttpPost("auth/")]

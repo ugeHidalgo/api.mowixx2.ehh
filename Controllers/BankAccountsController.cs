@@ -22,7 +22,7 @@ namespace API.Mowizz2.EHH.Controllers
         [HttpGet]
         public async Task<ActionResult<List<BankAccount>>> Get()
         {
-            return await _service.Get();
+            return Ok(await _service.Get());
         }
 
         [HttpGet("{id:length(24)}")]
@@ -44,7 +44,7 @@ namespace API.Mowizz2.EHH.Controllers
         {
             List<BankAccount> newBankAccounts = await _service.CreateBankAccounts(bankAccounts);
 
-             return newBankAccounts;
+            return newBankAccounts;
         }
     }
 }
