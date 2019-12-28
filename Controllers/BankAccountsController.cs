@@ -22,11 +22,17 @@ namespace API.Mowizz2.EHH.Controllers
         [HttpGet]
         public async Task<ActionResult<List<BankAccount>>> Get()
         {
-            return Ok(await _service.Get());
+            return Ok(await _service.GetAll());
+        }
+
+        [HttpGet("{company}", Name = "GetAllForCompany")]
+        public async Task<ActionResult<List<BankAccount>>> Get(string company)
+        {
+            return Ok(await _service.GetAllForCompany(company));
         }
 
         [HttpGet("{id:length(24)}")]
-        public async Task<ActionResult<BankAccount>> Get(string id)
+        public async Task<ActionResult<BankAccount>> GetById(string id)
         {
             BankAccount bankAccount = await _service.Get(id);
 

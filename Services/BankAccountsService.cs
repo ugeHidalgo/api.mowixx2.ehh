@@ -28,9 +28,14 @@ namespace API.Mowizz2.EHH.Facades
             };
         }
 
-        public async Task<List<BankAccount>> Get()
+        public async Task<List<BankAccount>> GetAll()
         {
             return await _bankAccounts.FindAsync(bankAccount => true).Result.ToListAsync();
+        }
+
+        public async Task<List<BankAccount>> GetAllForCompany(string company)
+        {
+            return await _bankAccounts.FindAsync(bankAccount => bankAccount.Company == company).Result.ToListAsync();
         }
 
         public async Task<BankAccount> Get(string id)
