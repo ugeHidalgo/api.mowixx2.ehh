@@ -14,18 +14,21 @@ namespace API.Mowizz2.EHH.Controllers
         private readonly BankAccountsService _bankAccountsService;
         private readonly UsersService _usersService;
         private readonly CompaniesService _companiesService;
+        private readonly ConceptsService _conceptsService;
 
         public ApiHealthController(
             IDataBaseSettings settings, 
             BankAccountsService bankAccountsService,
             UsersService usersService,
-            CompaniesService companiesService
+            CompaniesService companiesService,
+            ConceptsService conceptsService
             )
         {
             _dbSettings = settings;
             _bankAccountsService = bankAccountsService;
             _usersService = usersService;
             _companiesService = companiesService;
+            _conceptsService = conceptsService;
         }
 
         #region Public methods
@@ -41,7 +44,8 @@ namespace API.Mowizz2.EHH.Controllers
                 DataBaseUserName = GetUserName(),
                 BankAccountsHealthStatus = _bankAccountsService.Check(),
                 UsersHealthStatus = _usersService.Check(),
-                CompaniesHealthStatus = _companiesService.Check()
+                CompaniesHealthStatus = _companiesService.Check(),
+                ConceptsHealthStatus = _conceptsService.Check()
             };
         }
 

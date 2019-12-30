@@ -22,11 +22,12 @@ namespace API.Mowizz2.EHH.Controllers
             _service = service;
         }
 
+        #region Public methods
 
         [HttpGet("{idOrUserName}", Name = "GetUser")]
-        public async Task<ActionResult<User>> Get(string idOrUserName)
+        public async Task<ActionResult<User>> GetByIdOrUserName(string idOrUserName)
         {
-            var user = await _service.Get(idOrUserName);
+            var user = await _service.GetById(idOrUserName);
 
             if (user == null)
             {
@@ -40,9 +41,9 @@ namespace API.Mowizz2.EHH.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> Post([FromBody] User user)
+        public async Task<ActionResult<User>> CreateUser([FromBody] User user)
         {
-            await _service.Post(user);
+            await _service.CreateUser(user);
             var result = Created("", user);
             return result;
         }
@@ -58,17 +59,9 @@ namespace API.Mowizz2.EHH.Controllers
             return Ok(userToken);
         }
 
-        //// PUT: api/Users/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        #endregion
 
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        #region Private methods
 
         private static void ThrowIfInvalidOptions(JwtIssuerOptions options)
         {
@@ -89,5 +82,7 @@ namespace API.Mowizz2.EHH.Controllers
                 throw new ArgumentNullException(nameof(JwtIssuerOptions.JtiGenerator));
             }
         }
+
+        #endregion
     }
 }

@@ -27,12 +27,12 @@ namespace API.Mowizz2.EHH.Services
             };
         }
 
-        public async Task<List<Company>> Get()
+        public async Task<List<Company>> GetAll()
         {
             return await _mongoCollection.FindAsync(company => true).Result.ToListAsync();
         }
 
-        public async Task<Company> Get(string id)
+        public async Task<Company> GetById(string id)
         {
             var company = await _mongoCollection.FindAsync(x => x.Id == id).Result.FirstOrDefaultAsync();
             return company;

@@ -20,13 +20,13 @@ namespace API.Mowizz2.EHH.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<BankAccount>>> Get()
+        public async Task<ActionResult<List<BankAccount>>> GetAll()
         {
             return Ok(await _service.GetAll());
         }
 
-        [HttpGet("{company}", Name = "GetAllForCompany")]
-        public async Task<ActionResult<List<BankAccount>>> Get(string company)
+        [HttpGet("{company}", Name = "GetBankAccountsForCompany")]
+        public async Task<ActionResult<List<BankAccount>>> GetAllForCompany(string company)
         {
             return Ok(await _service.GetAllForCompany(company));
         }
@@ -34,7 +34,7 @@ namespace API.Mowizz2.EHH.Controllers
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<BankAccount>> GetById(string id)
         {
-            BankAccount bankAccount = await _service.Get(id);
+            BankAccount bankAccount = await _service.GetById(id);
 
             if (bankAccount == null)
             {

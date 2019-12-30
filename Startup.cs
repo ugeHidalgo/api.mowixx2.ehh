@@ -39,6 +39,7 @@ namespace API.Mowizz2.EHH
             services.AddSingleton<BankAccountsService>();
             services.AddSingleton<UsersService>();
             services.AddSingleton<CompaniesService>();
+            services.AddSingleton<ConceptsService>();
 
             // Configure JwtIssuerOptions
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));

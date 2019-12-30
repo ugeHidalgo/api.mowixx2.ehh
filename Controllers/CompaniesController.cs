@@ -20,15 +20,15 @@ namespace API.Mowizz2.EHH.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Company>>> Get()
+        public async Task<ActionResult<List<Company>>> GetAll()
         {
-            return await _service.Get();
+            return await _service.GetAll();
         }
 
         [HttpGet("{id:length(24)}")]
-        public async Task<ActionResult<Company>> Get(string id)
+        public async Task<ActionResult<Company>> GetById(string id)
         {
-            Company company = await _service.Get(id);
+            Company company = await _service.GetById(id);
 
             if (company == null)
             {

@@ -7,5 +7,6 @@
         string BankAccountsCollectionName { get; set; }        
         string UsersCollectionName { get; set; }
         string CompaniesCollectionName { get; set; }
+        string ConceptsCollectionName { get; set; }
     }
 }

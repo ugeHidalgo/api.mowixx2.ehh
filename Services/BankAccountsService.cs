@@ -38,7 +38,7 @@ namespace API.Mowizz2.EHH.Facades
             return await _bankAccounts.FindAsync(bankAccount => bankAccount.Company == company).Result.ToListAsync();
         }
 
-        public async Task<BankAccount> Get(string id)
+        public async Task<BankAccount> GetById(string id)
         {
             var bankAccount = await _bankAccounts.FindAsync(x => x.Id == id).Result.FirstOrDefaultAsync();
             return bankAccount;

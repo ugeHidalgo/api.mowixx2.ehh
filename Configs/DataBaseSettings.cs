@@ -8,5 +8,6 @@
         public string BankAccountsCollectionName { get; set; }
         public string UsersCollectionName { get; set; }
         public string CompaniesCollectionName { get; set; }
+        public string ConceptsCollectionName { get; set; }
     }
 }
