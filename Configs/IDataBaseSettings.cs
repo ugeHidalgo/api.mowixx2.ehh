@@ -2,11 +2,12 @@
 {
     public interface IDataBaseSettings
     {
-        string ConnectionString { get; set; }
-        string DatabaseName { get; set; }
-        string BankAccountsCollectionName { get; set; }        
-        string UsersCollectionName { get; set; }
+        string BankAccountsCollectionName { get; set; }
         string CompaniesCollectionName { get; set; }
         string ConceptsCollectionName { get; set; }
+        string ConnectionString { get; set; }
+        string CostCentresCollectionName { get; set; }
+        string DatabaseName { get; set; }
+        string UsersCollectionName { get; set; }
     }
 }

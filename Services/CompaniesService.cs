@@ -38,6 +38,12 @@ namespace API.Mowizz2.EHH.Services
             return company;
         }
 
+        public async Task<Company> GetByName(string name)
+        {
+            var company = await _mongoCollection.FindAsync(x => x.Name == name).Result.FirstOrDefaultAsync();
+            return company;
+        }
+
         public async Task<List<Company>> CreateCompanies(List<Company> companies)
         {
              await _mongoCollection.InsertManyAsync(companies);

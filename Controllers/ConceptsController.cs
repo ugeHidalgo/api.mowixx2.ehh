@@ -46,7 +46,7 @@ namespace API.Mowizz2.EHH.Controllers
         }
 
         [HttpPost]
-        public async Task<List<Concept>> CreateBankAccounts([FromBody] List<Concept> concepts)
+        public async Task<List<Concept>> CreateConcepts([FromBody] List<Concept> concepts)
         {
             List<Concept> newConcepts = await _service.CreateConcepts(concepts);
 

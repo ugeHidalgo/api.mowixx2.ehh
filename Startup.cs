@@ -26,6 +26,7 @@ namespace API.Mowizz2.EHH
         private const string SecretKey = "needtogetthisfromenvironment";
         private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
 
+        #region Public methods
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -40,6 +41,7 @@ namespace API.Mowizz2.EHH
             services.AddSingleton<UsersService>();
             services.AddSingleton<CompaniesService>();
             services.AddSingleton<ConceptsService>();
+            services.AddSingleton<CostCentresService>();
 
             // Configure JwtIssuerOptions
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
@@ -71,7 +73,7 @@ namespace API.Mowizz2.EHH
             services.AddControllers();
 
             services.AddCors();
-        }
+        }        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -98,5 +100,16 @@ namespace API.Mowizz2.EHH
                 endpoints.MapControllers();
             });
         }
+
+        #endregion
+
+        #region Private methods
+
+        private static void AddServices(IServiceCollection services)
+        {
+            
+        }
+
+        #endregion
     }
 }

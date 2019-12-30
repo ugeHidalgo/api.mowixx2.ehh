@@ -44,6 +44,12 @@ namespace API.Mowizz2.EHH.Facades
             return bankAccount;
         }
 
+        public async Task<BankAccount> GetByName(string name)
+        {
+            var bankAccount = await _bankAccounts.FindAsync(x => x.Name == name).Result.FirstOrDefaultAsync();
+            return bankAccount;
+        }
+
         public async Task<List<BankAccount>> CreateBankAccounts(List<BankAccount> bankAccounts)
         {
             await _bankAccounts.InsertManyAsync(bankAccounts);

@@ -13,9 +13,11 @@ namespace API.Mowizz2.EHH
         public string DataBaseUserName { get; set; }        
 
         public HealthStatusData BankAccountsHealthStatus { get; set; }
-        public HealthStatusData UsersHealthStatus { get; set; }
         public HealthStatusData CompaniesHealthStatus { get; set; }
         public HealthStatusData ConceptsHealthStatus { get; set; }
+        public HealthStatusData CostCentresHealthStatus { get; set; }        
+        public HealthStatusData UsersHealthStatus { get; set; }
+        
     }
 
     public class HealthStatusData

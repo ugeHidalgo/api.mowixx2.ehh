@@ -43,6 +43,12 @@ namespace API.Mowizz2.EHH.Services
             return concept;
         }
 
+        public async Task<Concept> GetByName(string name)
+        {
+            var concept = await _mongoCollection.FindAsync(x => x.Name == name).Result.FirstOrDefaultAsync();
+            return concept;
+        }
+
         public async Task<List<Concept>> CreateConcepts(List<Concept> concepts)
         {
             await _mongoCollection.InsertManyAsync(concepts);
