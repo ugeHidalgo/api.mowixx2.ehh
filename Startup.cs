@@ -42,6 +42,7 @@ namespace API.Mowizz2.EHH
             services.AddSingleton<CompaniesService>();
             services.AddSingleton<ConceptsService>();
             services.AddSingleton<CostCentresService>();
+            services.AddSingleton<TransactionsService>();
 
             // Configure JwtIssuerOptions
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));

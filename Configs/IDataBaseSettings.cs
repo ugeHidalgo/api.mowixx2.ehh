@@ -7,6 +7,7 @@
         string ConceptsCollectionName { get; set; }
         string ConnectionString { get; set; }
         string CostCentresCollectionName { get; set; }
+        string TransactionsCollectionName { get; set; }
         string DatabaseName { get; set; }
         string UsersCollectionName { get; set; }
     }
