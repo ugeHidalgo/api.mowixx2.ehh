@@ -1,12 +1,11 @@
 ﻿using API.Mowizz2.EHH.Configs;
 using API.Mowizz2.EHH.Models;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace API.Mowizz2.EHH.Facades
-{    
+namespace API.Mowizz2.EHH.Services
+{
     public class BankAccountsService
     {
         private readonly IMongoCollection<BankAccount> _bankAccounts;
@@ -28,25 +27,31 @@ namespace API.Mowizz2.EHH.Facades
             };
         }
 
-        public async Task<List<BankAccount>> GetAll()
+        public async Task<List<BankAccount>> GetAllAsync()
         {
             return await _bankAccounts.FindAsync(bankAccount => true).Result.ToListAsync();
         }
 
-        public async Task<List<BankAccount>> GetAllForCompany(string company)
+        public async Task<List<BankAccount>> GetAllForCompanyAsync(string company)
         {
             return await _bankAccounts.FindAsync(bankAccount => bankAccount.Company == company).Result.ToListAsync();
         }
 
-        public async Task<BankAccount> GetById(string id)
+        public async Task<BankAccount> GetByIdAsync(string id)
         {
             var bankAccount = await _bankAccounts.FindAsync(x => x.Id == id).Result.FirstOrDefaultAsync();
             return bankAccount;
         }
 
-        public async Task<BankAccount> GetByName(string name)
+        public async Task<BankAccount> GetByNameAsync(string name)
         {
             var bankAccount = await _bankAccounts.FindAsync(x => x.Name == name).Result.FirstOrDefaultAsync();
+            return bankAccount;
+        }
+
+        public BankAccount GetByName(string name)
+        {
+            var bankAccount = _bankAccounts.Find(x => x.Name == name).FirstOrDefault();
             return bankAccount;
         }
 

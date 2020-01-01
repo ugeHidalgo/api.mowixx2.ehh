@@ -19,10 +19,10 @@ namespace API.Mowizz2.EHH.Controllers
             _service = service;
         }
 
-        [HttpPost]
-        public async Task<List<Transaction>> ImportTransactions([FromBody] List<Transaction> transactions)
+        [HttpPost("import/")]
+        public async Task<List<Transaction>> ImportTransactions([FromBody] List<ImportTransaction> transactionsToImport)
         {
-            List<Transaction> newTransactions = await _service.ImportTransactions(transactions);
+            List<Transaction> newTransactions = await _service.ImportTransactions(transactionsToImport);
 
             return newTransactions;
         }

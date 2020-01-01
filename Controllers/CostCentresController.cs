@@ -22,19 +22,19 @@ namespace API.Mowizz2.EHH.Controllers
         [HttpGet]
         public async Task<ActionResult<List<CostCentre>>> GetAll()
         {
-            return Ok(await _service.GetAll());
+            return Ok(await _service.GetAllAsync());
         }
 
         [HttpGet("{company}", Name = "GetCostCentresForCompany")]
         public async Task<ActionResult<List<CostCentre>>> GetAllForCompany(string company)
         {
-            return Ok(await _service.GetAllForCompany(company));
+            return Ok(await _service.GetAllForCompanyAsync(company));
         }
 
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<CostCentre>> GetById(string id)
         {
-            CostCentre CostCentre = await _service.GetById(id);
+            CostCentre CostCentre = await _service.GetByIdAsync(id);
 
             if (CostCentre == null)
             {
@@ -47,7 +47,7 @@ namespace API.Mowizz2.EHH.Controllers
         [HttpPost]
         public async Task<List<CostCentre>> CreateCostCentres([FromBody] List<CostCentre> CostCentres)
         {
-            List<CostCentre> newCostCentres = await _service.CreateCostCentres(CostCentres);
+            List<CostCentre> newCostCentres = await _service.CreateCostCentresAsync(CostCentres);
 
             return newCostCentres;
         }

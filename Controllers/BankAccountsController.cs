@@ -1,5 +1,5 @@
-﻿using API.Mowizz2.EHH.Facades;
-using API.Mowizz2.EHH.Models;
+﻿using API.Mowizz2.EHH.Models;
+using API.Mowizz2.EHH.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -22,19 +22,19 @@ namespace API.Mowizz2.EHH.Controllers
         [HttpGet]
         public async Task<ActionResult<List<BankAccount>>> GetAll()
         {
-            return Ok(await _service.GetAll());
+            return Ok(await _service.GetAllAsync());
         }
 
         [HttpGet("{company}", Name = "GetBankAccountsForCompany")]
         public async Task<ActionResult<List<BankAccount>>> GetAllForCompany(string company)
         {
-            return Ok(await _service.GetAllForCompany(company));
+            return Ok(await _service.GetAllForCompanyAsync(company));
         }
 
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<BankAccount>> GetById(string id)
         {
-            BankAccount bankAccount = await _service.GetById(id);
+            BankAccount bankAccount = await _service.GetByIdAsync(id);
 
             if (bankAccount == null)
             {

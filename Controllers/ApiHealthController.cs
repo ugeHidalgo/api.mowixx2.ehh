@@ -1,5 +1,4 @@
 ﻿using API.Mowizz2.EHH.Configs;
-using API.Mowizz2.EHH.Facades;
 using API.Mowizz2.EHH.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;

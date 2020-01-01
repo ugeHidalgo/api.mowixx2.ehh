@@ -27,29 +27,35 @@ namespace API.Mowizz2.EHH.Services
             };
         }
 
-        public async Task<List<CostCentre>> GetAll()
+        public async Task<List<CostCentre>> GetAllAsync()
         {
             return await _mongoCollection.FindAsync(CostCentre => true).Result.ToListAsync();
         }
 
-        public async Task<List<CostCentre>> GetAllForCompany(string company)
+        public async Task<List<CostCentre>> GetAllForCompanyAsync(string company)
         {
             return await _mongoCollection.FindAsync(CostCentre => CostCentre.Company == company).Result.ToListAsync();
         }
 
-        public async Task<CostCentre> GetById(string id)
+        public async Task<CostCentre> GetByIdAsync(string id)
         {
             var CostCentre = await _mongoCollection.FindAsync(x => x.Id == id).Result.FirstOrDefaultAsync();
             return CostCentre;
         }
 
-        public async Task<CostCentre> GetByName(string name)
+        public async Task<CostCentre> GetByNameAsync(string name)
         {
             var CostCentre = await _mongoCollection.FindAsync(x => x.Name == name).Result.FirstOrDefaultAsync();
             return CostCentre;
         }
 
-        public async Task<List<CostCentre>> CreateCostCentres(List<CostCentre> CostCentres)
+        public CostCentre GetByName(string name)
+        {
+            var CostCentre = _mongoCollection.Find(x => x.Name == name).FirstOrDefault();
+            return CostCentre;
+        }
+
+        public async Task<List<CostCentre>> CreateCostCentresAsync(List<CostCentre> CostCentres)
         {
             await _mongoCollection.InsertManyAsync(CostCentres);
             return CostCentres;

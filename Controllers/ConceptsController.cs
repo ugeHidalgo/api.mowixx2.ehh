@@ -22,19 +22,19 @@ namespace API.Mowizz2.EHH.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Concept>>> GetAll()
         {
-            return Ok(await _service.GetAll());
+            return Ok(await _service.GetAllAsync());
         }
 
         [HttpGet("{company}", Name = "GetConceptsForCompany")]
         public async Task<ActionResult<List<Concept>>> GetAllForCompany(string company)
         {
-            return Ok(await _service.GetAllForCompany(company));
+            return Ok(await _service.GetAllForCompanyAsync(company));
         }
 
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<Concept>> GetById(string id)
         {
-            Concept concept = await _service.GetById(id);
+            Concept concept = await _service.GetByIdAsync(id);
 
             if (concept == null)
             {
@@ -48,7 +48,7 @@ namespace API.Mowizz2.EHH.Controllers
         [HttpPost]
         public async Task<List<Concept>> CreateConcepts([FromBody] List<Concept> concepts)
         {
-            List<Concept> newConcepts = await _service.CreateConcepts(concepts);
+            List<Concept> newConcepts = await _service.CreateConceptsAsync(concepts);
 
             return newConcepts;
         }

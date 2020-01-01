@@ -1,7 +1,7 @@
 using API.Mowizz2.EHH.Configs;
-using API.Mowizz2.EHH.Facades;
 using API.Mowizz2.EHH.Models;
 using API.Mowizz2.EHH.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -71,9 +71,10 @@ namespace API.Mowizz2.EHH
                 };
             });
 
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
 
-            services.AddCors();
+            services.AddCors();            
         }        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

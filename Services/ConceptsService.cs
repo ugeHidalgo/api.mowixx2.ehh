@@ -27,29 +27,35 @@ namespace API.Mowizz2.EHH.Services
             };
         }
 
-        public async Task<List<Concept>> GetAll()
+        public async Task<List<Concept>> GetAllAsync()
         {
             return await _mongoCollection.FindAsync(concept => true).Result.ToListAsync();
         }
 
-        public async Task<List<Concept>> GetAllForCompany(string company)
+        public async Task<List<Concept>> GetAllForCompanyAsync(string company)
         {
             return await _mongoCollection.FindAsync(concept => concept.Company == company).Result.ToListAsync();
         }
 
-        public async Task<Concept> GetById(string id)
+        public async Task<Concept> GetByIdAsync(string id)
         {
             var concept = await _mongoCollection.FindAsync(x => x.Id == id).Result.FirstOrDefaultAsync();
             return concept;
         }
 
-        public async Task<Concept> GetByName(string name)
+        public async Task<Concept> GetByNameAsync(string name)
         {
             var concept = await _mongoCollection.FindAsync(x => x.Name == name).Result.FirstOrDefaultAsync();
             return concept;
         }
 
-        public async Task<List<Concept>> CreateConcepts(List<Concept> concepts)
+        public Concept GetByName(string name)
+        {
+            var concept = _mongoCollection.Find<Concept>(x => x.Name == name).FirstOrDefault();
+            return concept;
+        }
+
+        public async Task<List<Concept>> CreateConceptsAsync(List<Concept> concepts)
         {
             await _mongoCollection.InsertManyAsync(concepts);
             return concepts;
