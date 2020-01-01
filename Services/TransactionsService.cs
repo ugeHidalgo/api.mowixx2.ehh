@@ -32,6 +32,11 @@ namespace API.Mowizz2.EHH.Services
             };
         }
 
+        public async Task<List<Transaction>> GetAllForCompanyAsync(string company)
+        {
+            return await _transactions.FindAsync(transaction => transaction.Company == company).Result.ToListAsync();
+        }
+
         public async Task<List<Transaction>> ImportTransactions(List<ImportTransaction> transactionsToImport)
         {
             List<Transaction> transactions = new List<Transaction>();

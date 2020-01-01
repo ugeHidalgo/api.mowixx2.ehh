@@ -19,6 +19,12 @@ namespace API.Mowizz2.EHH.Controllers
             _service = service;
         }
 
+        [HttpGet("{company}", Name = "GetTransactionsForCompany")]
+        public async Task<ActionResult<List<Transaction>>> GetAllForCompany(string company)
+        {
+            return Ok(await _service.GetAllForCompanyAsync(company));
+        }
+
         [HttpPost("import/")]
         public async Task<List<Transaction>> ImportTransactions([FromBody] List<ImportTransaction> transactionsToImport)
         {
