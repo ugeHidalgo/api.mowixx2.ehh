@@ -2,6 +2,7 @@
 using API.Mowizz2.EHH.Models;
 using AutoMapper;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -54,6 +55,17 @@ namespace API.Mowizz2.EHH.Services
                 await _transactions.InsertManyAsync(transactions);
             }
             return transactions;
+        }
+
+        public async Task<Transaction> CreateTransaction(ImportTransaction transactionToCreate)
+        {
+            Transaction transaction;
+            transaction = _mapper.Map<ImportTransaction, Transaction>(transactionToCreate);
+            transaction.Concept = GetConcept(transactionToCreate.ConceptName);
+            transaction.BankAccount = GetBankAccount(transactionToCreate.BankAccountName);
+            transaction.CostCentre = GetCostCentre(transactionToCreate.CostCentreName);
+            await _transactions.InsertOneAsync(transaction);
+            return transaction;
         }
 
         #region Private Methods

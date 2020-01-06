@@ -32,5 +32,13 @@ namespace API.Mowizz2.EHH.Controllers
 
             return newTransactions;
         }
+
+        [HttpPost]
+        public async Task<ActionResult<Transaction>> CreateTransaction([FromBody] ImportTransaction transaction)
+        {
+            await _service.CreateTransaction(transaction);
+            var result = Created("", transaction);
+            return result;
+        }
     }
 }
