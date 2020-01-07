@@ -33,6 +33,12 @@ namespace API.Mowizz2.EHH.Services
             };
         }
 
+        public async Task<Transaction> GetById(string company, string id)
+        {
+            var transactions = await _transactions.FindAsync(transaction => transaction.Company == company && transaction.Id == id);
+            return transactions.FirstOrDefault();
+        }
+
         public async Task<List<Transaction>> GetAllForCompanyAsync(string company)
         {
             return await _transactions.FindAsync(transaction => transaction.Company == company).Result.ToListAsync();

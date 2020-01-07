@@ -25,6 +25,18 @@ namespace API.Mowizz2.EHH.Controllers
             return Ok(await _service.GetAllForCompanyAsync(company));
         }
 
+        [HttpGet("{company}/{id}", Name = "GetTransactionById")]
+        public async Task<ActionResult<Transaction>> GetById(string company, string id)
+        {
+            Transaction transaction = await _service.GetById(company, id);
+
+            if (transaction == null)
+            {
+                return NotFound();
+            }
+            return Ok(transaction);
+        }
+
         [HttpPost("import/")]
         public async Task<List<Transaction>> ImportTransactions([FromBody] List<ImportTransaction> transactionsToImport)
         {
