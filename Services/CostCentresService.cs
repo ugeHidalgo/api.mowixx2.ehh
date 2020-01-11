@@ -29,12 +29,16 @@ namespace API.Mowizz2.EHH.Services
 
         public async Task<List<CostCentre>> GetAllAsync()
         {
-            return await _mongoCollection.FindAsync(CostCentre => true).Result.ToListAsync();
+            return await _mongoCollection.FindAsync(x => true).Result.ToListAsync();
         }
 
         public async Task<List<CostCentre>> GetAllForCompanyAsync(string company)
         {
-            return await _mongoCollection.FindAsync(CostCentre => CostCentre.Company == company).Result.ToListAsync();
+            return await _mongoCollection.FindAsync(x => x.Company == company).Result.ToListAsync();
+        }
+        public async Task<List<CostCentre>> GetAllForCompanyWithStatusAsync(string company, bool status)
+        {
+            return await _mongoCollection.FindAsync(x => x.Company == company && x.Active == status).Result.ToListAsync();
         }
 
         public async Task<CostCentre> GetByIdAsync(string id)

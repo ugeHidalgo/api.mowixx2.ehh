@@ -4,7 +4,7 @@ using System;
 
 namespace API.Mowizz2.EHH.Models
 {
-    public class BankAccount
+    public class Account
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

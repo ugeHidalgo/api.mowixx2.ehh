@@ -23,8 +23,8 @@ namespace API.Mowizz2.EHH.Models
         [BsonElement("costCentreName")]
         public string CostCentreName { get; set; }
 
-        [BsonElement("bankAccountName")]
-        public string BankAccountName { get; set; }
+        [BsonElement("accountName")]
+        public string AccountName { get; set; }
 
         [BsonElement("comments")]
         public String Comments { get; set; }

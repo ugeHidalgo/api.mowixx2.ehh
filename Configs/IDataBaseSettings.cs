@@ -2,7 +2,7 @@
 {
     public interface IDataBaseSettings
     {
-        string BankAccountsCollectionName { get; set; }
+        string AccountsCollectionName { get; set; }
         string CompaniesCollectionName { get; set; }
         string ConceptsCollectionName { get; set; }
         string ConnectionString { get; set; }

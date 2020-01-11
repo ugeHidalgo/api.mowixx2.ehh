@@ -37,7 +37,7 @@ namespace API.Mowizz2.EHH
             services.AddSingleton<IDataBaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<DataBaseSettings>>().Value);
 
-            services.AddSingleton<BankAccountsService>();
+            services.AddSingleton<AccountsService>();
             services.AddSingleton<UsersService>();
             services.AddSingleton<CompaniesService>();
             services.AddSingleton<ConceptsService>();

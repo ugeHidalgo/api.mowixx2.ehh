@@ -10,7 +10,7 @@ namespace API.Mowizz2.EHH.Controllers
     public class ApiHealthController : ControllerBase
     {
         private readonly IDataBaseSettings _dbSettings;
-        private readonly BankAccountsService _bankAccountsService;
+        private readonly AccountsService _accountsService;
         private readonly UsersService _usersService;
         private readonly CompaniesService _companiesService;
         private readonly ConceptsService _conceptsService;
@@ -18,7 +18,7 @@ namespace API.Mowizz2.EHH.Controllers
 
         public ApiHealthController(
             IDataBaseSettings settings, 
-            BankAccountsService bankAccountsService,
+            AccountsService accountsService,
             UsersService usersService,
             CompaniesService companiesService,
             ConceptsService conceptsService,
@@ -26,7 +26,7 @@ namespace API.Mowizz2.EHH.Controllers
             )
         {
             _dbSettings = settings;
-            _bankAccountsService = bankAccountsService;
+            _accountsService = accountsService;
             _usersService = usersService;
             _companiesService = companiesService;
             _conceptsService = conceptsService;
@@ -44,7 +44,7 @@ namespace API.Mowizz2.EHH.Controllers
                 DataBaseName = _dbSettings.DatabaseName,
                 ServerName = GetServerName(),
                 DataBaseUserName = GetUserName(),
-                BankAccountsHealthStatus = _bankAccountsService.Check(),
+                AccountsHealthStatus = _accountsService.Check(),
                 UsersHealthStatus = _usersService.Check(),
                 CompaniesHealthStatus = _companiesService.Check(),
                 ConceptsHealthStatus = _conceptsService.Check(),

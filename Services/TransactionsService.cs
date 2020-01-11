@@ -52,7 +52,7 @@ namespace API.Mowizz2.EHH.Services
             {
                 transaction = _mapper.Map<ImportTransaction, Transaction>(transactionToImport);
                 transaction.Concept = GetConcept(transactionToImport.ConceptName);
-                transaction.BankAccount = GetBankAccount(transactionToImport.BankAccountName);
+                transaction.Account = GetBankAccount(transactionToImport.AccountName);
                 transaction.CostCentre = GetCostCentre(transactionToImport.CostCentreName);
                 transactions.Add(transaction);
             }
@@ -68,7 +68,7 @@ namespace API.Mowizz2.EHH.Services
             Transaction transaction;
             transaction = _mapper.Map<ImportTransaction, Transaction>(transactionToCreate);
             transaction.Concept = GetConcept(transactionToCreate.ConceptName);
-            transaction.BankAccount = GetBankAccount(transactionToCreate.BankAccountName);
+            transaction.Account = GetBankAccount(transactionToCreate.AccountName);
             transaction.CostCentre = GetCostCentre(transactionToCreate.CostCentreName);
             await _transactions.InsertOneAsync(transaction);
             return transaction;
@@ -76,9 +76,9 @@ namespace API.Mowizz2.EHH.Services
 
         #region Private Methods
 
-        private BankAccount GetBankAccount(string bankAccountName)
+        private Account GetBankAccount(string bankAccountName)
         {
-            BankAccountsService _bankAccountService = new BankAccountsService(_settings);
+            AccountsService _bankAccountService = new AccountsService(_settings);
             var bankAccount = _bankAccountService.GetByName(bankAccountName);
             return bankAccount;
         }

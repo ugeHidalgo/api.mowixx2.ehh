@@ -10,7 +10,7 @@ namespace API.Mowizz2.EHH.Mappers
         {
             CreateMap<ImportTransaction, Transaction>()
                 .ForMember(
-                    dest => dest.BankAccount,
+                    dest => dest.Account,
                     opt => opt.Ignore());
 
             CreateMap<ImportTransaction, Transaction>()

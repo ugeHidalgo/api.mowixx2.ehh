@@ -2,7 +2,7 @@
 {
     public class DataBaseSettings : IDataBaseSettings
     {
-        public string BankAccountsCollectionName { get; set; }
+        public string AccountsCollectionName { get; set; }
         public string CompaniesCollectionName { get; set; }
         public string ConceptsCollectionName { get; set; }
         public string ConnectionString { get; set; }
