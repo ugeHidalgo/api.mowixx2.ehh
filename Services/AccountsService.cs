@@ -37,6 +37,11 @@ namespace API.Mowizz2.EHH.Services
             return await _accounts.FindAsync(account => account.Company == company).Result.ToListAsync();
         }
 
+        public async Task<List<Account>> GetAllForCompanyWithStatusAsync(string company, bool status)
+        {
+            return await _accounts.FindAsync(x => x.Company == company && x.Active == status).Result.ToListAsync();
+        }
+
         public async Task<Account> GetByIdAsync(string id)
         {
             var account = await _accounts.FindAsync(x => x.Id == id).Result.FirstOrDefaultAsync();
