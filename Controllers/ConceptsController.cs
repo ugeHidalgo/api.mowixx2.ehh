@@ -31,6 +31,12 @@ namespace API.Mowizz2.EHH.Controllers
             return Ok(await _service.GetAllForCompanyAsync(company));
         }
 
+        [HttpGet("{company}/{type}/{status}", Name = "GetConceptsForCompanyStatusAndType")]
+        public async Task<ActionResult<List<Concept>>> GetAllForCompanyStatusAndType(string company, int type, bool status)
+        {
+            return Ok(await _service.GetAllForCompanyStatusAndTypeAsync(company, type, status));
+        }
+
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<Concept>> GetById(string id)
         {

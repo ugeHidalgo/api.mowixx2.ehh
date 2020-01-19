@@ -49,6 +49,11 @@ namespace API.Mowizz2.EHH.Services
             return concept;
         }
 
+        public async Task<List<Concept>> GetAllForCompanyStatusAndTypeAsync(string company, int type, bool status)
+        {
+            return await _mongoCollection.FindAsync(x => x.Company == company && x.TransactionType == type && x.Active == status).Result.ToListAsync();
+        }
+
         public Concept GetByName(string name)
         {
             var concept = _mongoCollection.Find<Concept>(x => x.Name == name).FirstOrDefault();

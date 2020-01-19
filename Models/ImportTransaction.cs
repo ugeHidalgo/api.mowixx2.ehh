@@ -30,7 +30,7 @@ namespace API.Mowizz2.EHH.Models
         public String Comments { get; set; }
 
         [BsonElement("date")]
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         [BsonElement("company")]
         public string Company { get; set; }
