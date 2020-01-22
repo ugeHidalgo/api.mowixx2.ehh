@@ -4,6 +4,7 @@ using AutoMapper;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace API.Mowizz2.EHH.Services
@@ -63,15 +64,31 @@ namespace API.Mowizz2.EHH.Services
             return transactions;
         }
 
-        public async Task<Transaction> CreateTransaction(ImportTransaction transactionToCreate)
+        public async Task<Transaction> CreateOrUpdateTransaction(Transaction transaction)
         {
-            Transaction transaction;
-            transaction = _mapper.Map<ImportTransaction, Transaction>(transactionToCreate);
-            transaction.Concept = GetConcept(transactionToCreate.ConceptName);
-            transaction.Account = GetBankAccount(transactionToCreate.AccountName);
-            transaction.CostCentre = GetCostCentre(transactionToCreate.CostCentreName);
-            await _transactions.InsertOneAsync(transaction);
-            return transaction;
+            var transactionId = transaction.Id;
+            if (transactionId == null)
+            {
+                await _transactions.InsertOneAsync(transaction);
+                return transaction;
+            }
+
+            Expression<Func<Transaction, bool>> filter = t => t.Id == transactionId;
+
+            var update = Builders<Transaction>.Update
+                .Set(t => t.Amount, transaction.Amount)
+                .Set(t => t.AccountAmount, transaction.AccountAmount)
+                .Set(t => t.TransactionType, transaction.TransactionType)
+                .Set(t => t.Concept, transaction.Concept)
+                .Set(t => t.CostCentre, transaction.CostCentre)
+                .Set(t => t.Account, transaction.Account)
+                .Set(t => t.Comments, transaction.Comments)
+                .Set(t => t.Date, transaction.Date)
+                .Set(t => t.Company, transaction.Company);
+
+            var options = new FindOneAndUpdateOptions<Transaction> { ReturnDocument = ReturnDocument.After };
+
+            return await _transactions.FindOneAndUpdateAsync(filter, update, options);
         }
 
         #region Private Methods

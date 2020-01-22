@@ -46,9 +46,9 @@ namespace API.Mowizz2.EHH.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Transaction>> CreateTransaction([FromBody] ImportTransaction transaction)
+        public async Task<ActionResult<Transaction>> CreateOrUpdateTransaction([FromBody] Transaction transaction)
         {
-            await _service.CreateTransaction(transaction);
+            await _service.CreateOrUpdateTransaction(transaction);
             var result = Created("", transaction);
             return result;
         }
