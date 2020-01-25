@@ -22,6 +22,9 @@ namespace API.Mowizz2.EHH.Models
         [BsonElement("iban")]
         public string Iban { get; set; }
 
+        [BsonElement("amount")]
+        public double Amount { get; set; }
+
         [BsonElement("comments")]
         public string Comments { get; set; }
 
