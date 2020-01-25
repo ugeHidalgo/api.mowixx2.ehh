@@ -90,9 +90,10 @@ namespace API.Mowizz2.EHH
             app.UseRouting();
 
             // global cors policy
-            app.UseCors(x => x
+            app.UseCors(x => x                  
                   .AllowAnyOrigin()
-                  .AllowAnyHeader());
+                  .AllowAnyHeader()
+                  .AllowAnyMethod());
 
             app.UseAuthentication();
             app.UseAuthorization();  

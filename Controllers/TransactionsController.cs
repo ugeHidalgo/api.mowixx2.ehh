@@ -52,5 +52,17 @@ namespace API.Mowizz2.EHH.Controllers
             var result = Created("", transaction);
             return result;
         }
+
+        [HttpDelete("{company}/{id}", Name = "DeleteTransactionById")]
+        public async Task<ActionResult<bool>> DeleteById(string company, string id)
+        {
+            bool deleted = await _service.DeleteById(company, id);
+
+            if (deleted)
+            {
+                return Ok(true);                
+            }
+            return NotFound();
+        }
     }
 }

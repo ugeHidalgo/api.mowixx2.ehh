@@ -75,7 +75,12 @@ namespace API.Mowizz2.EHH.Services
                 return await CreateNewTransaction(transaction, accounts);
             }
             return await UpdateTransaction(transaction, accounts);
+        }
 
+        public async Task<bool> DeleteById(string company, string id)
+        {
+            var accounts = _dataBase.GetCollection<Account>(_settings.AccountsCollectionName);
+            return await DeleteTransaction(company, id, accounts);
         }
 
         #region Private Methods
@@ -136,7 +141,7 @@ namespace API.Mowizz2.EHH.Services
                 try
                 {
                     //Find the old transaction to take old amount
-                    var transactionFilter = Builders<Transaction>.Filter.Eq("Id", transaction.Id);
+                    Expression<Func<Transaction, bool>> transactionFilter = t => t.Company == transaction.Company && t.Id == transaction.Id;
                     var oldTransaction = await _transactions.FindAsync<Transaction>(transactionFilter);
                     double oldAmount = oldTransaction.FirstOrDefault().Amount;
 
@@ -156,7 +161,7 @@ namespace API.Mowizz2.EHH.Services
                     var updatedTransaction = await _transactions.FindOneAndUpdateAsync(transactionFilter, transactionUpdate, transactionOptions);
 
                     //Updates the account amount using the old and new amount value.
-                    var accountFilter = Builders<Account>.Filter.Eq("Id", updatedTransaction.Account.Id);
+                    Expression<Func<Account, bool>> accountFilter = account => account.Company == updatedTransaction.Company && account.Id == updatedTransaction.Account.Id;
                     var accountUpdate = Builders<Account>.Update.Inc("Amount", updatedTransaction.Amount - oldAmount);
                     await accounts.FindOneAndUpdateAsync(accountFilter, accountUpdate);
 
@@ -173,6 +178,42 @@ namespace API.Mowizz2.EHH.Services
             }
         }
 
-            #endregion
+        private async Task<bool> DeleteTransaction(string company, string id, IMongoCollection<Account> accounts)
+        {
+            using (var session = await _client.StartSessionAsync())
+            {
+                //session.StartTransaction(); //No disponible en mi version de mongoDb
+                try
+                {
+                    Expression<Func<Transaction, bool>> transactionFilter = transaction => transaction.Company == company && transaction.Id == id;
+
+                    //Find the old transaction to take old amount                    
+                    var oldTransactions = await _transactions.FindAsync(transactionFilter);
+                    var oldTransaction = oldTransactions.FirstOrDefault();
+                    if (oldTransaction == null) return false;
+                    double oldAmount = oldTransaction.Amount;
+
+                    //Find and delete the transaction                    
+                    await _transactions.DeleteOneAsync(transactionFilter);
+
+                    //Updates the account amount using the old amount value.                    
+                    Expression<Func<Account, bool>> accountFilter = account => account.Company == oldTransaction.Company && account.Id == oldTransaction.Account.Id;
+                    var accountUpdate = Builders<Account>.Update.Inc("Amount", oldAmount*-1);
+                    await accounts.FindOneAndUpdateAsync(accountFilter, accountUpdate);
+
+                    //await session.CommitTransactionAsync(); //No disponible en mi version de mongoDb
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error deleting transaction: " + e.Message);
+                    //await session.AbortTransactionAsync(); //No disponible en mi version de mongoDb
+                    return false;
+                }
+            }
         }
+
+        #endregion
+    }
 }
