@@ -1,5 +1,6 @@
 ﻿using API.Mowizz2.EHH.Models;
 using API.Mowizz2.EHH.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
@@ -24,6 +25,7 @@ namespace API.Mowizz2.EHH.Controllers
 
         #region Public methods
 
+        [Authorize]
         [HttpGet("{idOrUserName}", Name = "GetUser")]
         public async Task<ActionResult<User>> GetByIdOrUserName(string idOrUserName)
         {
@@ -36,7 +38,8 @@ namespace API.Mowizz2.EHH.Controllers
                 {
                     return NotFound();
                 }
-            }
+            }            
+            
             return Ok(user);
         }
 
@@ -57,6 +60,15 @@ namespace API.Mowizz2.EHH.Controllers
                 return Unauthorized(userToken);
             }            
             return Ok(userToken);
+        }
+
+        [Authorize]
+        [HttpPost("update/")]
+        public async Task<ActionResult<User>> UpdateUser([FromBody] User user)
+        {
+            await _service.UpdateUser(user);
+            var result = Created("", user);
+            return result;
         }
 
         #endregion

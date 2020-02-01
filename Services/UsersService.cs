@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -12,13 +13,14 @@ namespace API.Mowizz2.EHH.Services
     public class UsersService
     {
         private readonly IMongoCollection<User> _users;
+        private MongoClient _client;
+        private IMongoDatabase _dataBase;
 
         public UsersService(IDataBaseSettings settings)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var dataBase = client.GetDatabase(settings.DatabaseName);
-
-            _users = dataBase.GetCollection<User>(settings.UsersCollectionName);
+            _client = new MongoClient(settings.ConnectionString);
+            _dataBase = _client.GetDatabase(settings.DatabaseName);
+            _users = _dataBase.GetCollection<User>(settings.UsersCollectionName);
         }
 
         public HealthStatusData Check()
@@ -32,20 +34,70 @@ namespace API.Mowizz2.EHH.Services
 
         public async Task<User> GetById(string userId)
         {
-            var users = await _users.FindAsync(user => user.Id == userId);
-            return users.FirstOrDefault();
+            try
+            {
+                var users = await _users.FindAsync(user => user.Id == userId);
+                var user = users.FirstOrDefault();
+                if (user != null)
+                { 
+                    user.Password = string.Empty; 
+                }
+                return user;
+            }
+            catch
+            {
+                return null;
+            }            
         }
 
         public async Task<User> GetByUserName(string userName)
         {
-            var users = await _users.FindAsync(user => user.UserName == userName);
-            return users.FirstOrDefault();
+            try 
+            {
+                var users = await _users.FindAsync(user => user.UserName == userName);
+                var user = users.FirstOrDefault();
+                if (user != null)
+                {
+                    user.Password = string.Empty;
+                }
+                return user;
+            }            
+            catch
+            {
+                return null;
+            }
         }
 
         public async Task<User> CreateUser(User user)
         {
             await _users.InsertOneAsync(user);
             return user;
+        }
+
+        public async Task<User> UpdateUser(User user)
+        {
+            using (var session = await _client.StartSessionAsync())
+            {
+                try
+                {
+                    Expression<Func<User, bool>> userFilter = u => u.UserName == user.UserName;
+                    var userUpdate = Builders<User>.Update
+                        .Set(u => u.FirstName, user.FirstName)
+                        .Set(u => u.LastName, user.LastName)
+                        .Set(u => u.EMail, user.EMail)
+                        .Set(u => u.Company, user.Company);
+
+                    var userOptions = new FindOneAndUpdateOptions<User> { ReturnDocument = ReturnDocument.After };
+                    var updatedUser = await _users.FindOneAndUpdateAsync(userFilter, userUpdate, userOptions);
+                    
+                    return updatedUser;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error updating user: " + e.Message);                    
+                    return null;
+                }
+            }
         }
 
         public async Task<UserToken> AddTokenToAuthorizedUser(UserToken userTokenRequest, JwtIssuerOptions jwtOptions)
