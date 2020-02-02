@@ -85,6 +85,10 @@ namespace API.Mowizz2.EHH.Services
                         .Set(u => u.FirstName, user.FirstName)
                         .Set(u => u.LastName, user.LastName)
                         .Set(u => u.EMail, user.EMail)
+                        .Set(u => u.Updated, DateTime.UtcNow)
+                        .Set(u => u.TransactionType, user.TransactionType)
+                        .Set(u => u.CostCentre, user.CostCentre)
+                        .Set(u => u.Account, user.Account)
                         .Set(u => u.Company, user.Company);
 
                     var userOptions = new FindOneAndUpdateOptions<User> { ReturnDocument = ReturnDocument.After };

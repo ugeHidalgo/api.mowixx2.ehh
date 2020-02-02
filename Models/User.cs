@@ -36,5 +36,14 @@ namespace API.Mowizz2.EHH.Models
 
         [BsonElement("company")]
         public string Company { get; set; }
+
+        [BsonElement("transactionType")]
+        public int TransactionType { get; set; }
+
+        [BsonElement("costCentre")]
+        public CostCentre CostCentre { get; set; }
+
+        [BsonElement("account")]
+        public Account Account { get; set; }
     }
 }
